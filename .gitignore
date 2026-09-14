@@ -1,0 +1,5 @@
+﻿# Ignore local review artifacts and unused mocks
+_review/
+desk-preview.jpg
+*.png
+!favicon.svg
