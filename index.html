@@ -20,185 +20,211 @@
   --green:#2c8a61;
   --red:#c25750;
   --blue:#426785;
-  --rail:200px;
-  --rail-gap:48px;
-  --fs-meta:13px;
-  --fs-body:16px;
-  --fs-card:20px;
-  --fs-stat:32px;
-  --fs-section:40px;
-  --fs-hero:56px;
-  --lh-tight:1.12;
-  --lh-body:1.6;
-  --space-section:96px;
+  --rail:180px;
+  --gap:48px;
   --nav-h:64px;
 }
 *{box-sizing:border-box}
-html{scroll-padding-top:var(--nav-h);scroll-behavior:smooth}
-body{margin:0;font-family:Ubuntu,Arial,sans-serif;color:var(--ink);background:#fafbf8;font-size:var(--fs-body);line-height:var(--lh-body)}
+html{
+  height:100%;
+  scroll-snap-type:y mandatory;
+  scroll-behavior:smooth;
+  scroll-padding-top:var(--nav-h);
+}
+body{
+  margin:0;
+  font-family:Ubuntu,Arial,sans-serif;
+  color:var(--ink);
+  background:var(--d);
+  font-size:16px;
+  line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+}
 a{text-decoration:none;color:inherit}
-.w{max-width:1120px;width:calc(100% - 64px);margin:auto}
+.w{width:calc(100% - 64px);max-width:1120px;margin:0 auto}
 
-.rail{
-  display:grid;
-  grid-template-columns:var(--rail) minmax(0,1fr);
-  gap:var(--rail-gap);
-  align-items:start;
-}
-
+/* Fixed header — always visible across slides */
 header{
-  position:fixed;top:0;left:0;right:0;z-index:50;
-  background:var(--d);color:#fff;
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  height:var(--nav-h);
+  background:rgba(5,5,5,.96);
   border-bottom:1px solid #1c1e1c;
+  color:#fff;
 }
-.hero,footer{background:var(--d);color:#fff}
 .nav{height:var(--nav-h);display:flex;align-items:center;justify-content:space-between}
 .brand{display:flex;align-items:center;gap:10px;font-size:20px;font-weight:700;letter-spacing:-0.02em}
-.brand svg{display:block;width:28px;height:28px;flex:0 0 28px}
-nav{display:flex;gap:28px;font-size:var(--fs-meta);color:#b8beb8}
-nav a:hover{color:var(--lime)}
-
-.hero{padding:calc(56px + var(--nav-h)) 0 64px}
-.hg{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:56px;align-items:start}
-.eye,.label{font-size:var(--fs-meta);font-weight:500;line-height:1.4}
-.eye{color:var(--lime);margin:0 0 16px}
-.hero h1{font-size:var(--fs-hero);line-height:var(--lh-tight);letter-spacing:-0.035em;margin:0 0 20px;max-width:16ch}
-.hero p{font-size:17px;line-height:1.6;color:#b8beb8;max-width:36em;margin:0}
-.start{font-size:var(--fs-meta);color:#e8ebe4;margin-top:20px}
-
-.term{border:1px solid #2a2d2a;background:#0a0b0a}
-.tt{
-  height:36px;padding:0 14px;display:flex;align-items:center;justify-content:space-between;
-  border-bottom:1px solid #252825;font-size:11px;letter-spacing:0.04em;color:#8d948d;text-transform:uppercase
+.brand-mark{
+  width:34px;height:34px;border-radius:8px;background:#0c0e0c;border:1px solid #222;
+  display:grid;place-items:center;flex:0 0 34px;
 }
-.ct{padding:16px 14px 0;display:flex;justify-content:space-between;align-items:baseline;gap:12px;font-size:var(--fs-meta);color:#8d948d}
-.ct b{color:#fff;font-size:14px;font-weight:500}
-.chart{height:220px;margin:12px 14px 0;border-bottom:1px solid #2a2d2a}
-.chart svg,.mini svg{width:100%;height:100%;display:block}
-.cf{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:12px 14px 14px;font-size:11px;line-height:1.35;color:#8d948d;text-align:left}
-.cf b{display:block;color:#dfe3df;font-size:11px;letter-spacing:0.04em;margin-bottom:2px}
+.brand-mark svg{width:20px;height:20px;display:block}
+nav{display:flex;gap:26px;font-size:13px;color:#b8beb8}
+nav a{padding:4px 0;border-bottom:1px solid transparent}
+nav a:hover,nav a.is-on{color:var(--lime);border-bottom-color:var(--lime)}
 
-.bar{background:var(--lime)}
-.metrics{display:grid;grid-template-columns:repeat(3,1fr)}
-.metric{padding:22px 32px;border-right:1px solid rgba(23,25,23,.18)}
-.metric:first-child{padding-left:0}
-.metric:last-child{border-right:0;padding-right:0}
-.metric b{display:block;font-size:var(--fs-stat);line-height:1;margin:0 0 8px;letter-spacing:-0.02em}
-.metric span{display:block;font-size:var(--fs-meta);line-height:1.4;max-width:22em}
+/*
+  2.0 sketch = one screen per section (PowerPoint).
+  Each .slide fills the viewport under the fixed header.
+*/
+.slide{
+  min-height:100dvh;
+  padding:calc(var(--nav-h) + 36px) 0 40px;
+  scroll-snap-align:start;
+  scroll-snap-stop:always;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+.slide-inner{width:100%}
 
-section{padding:var(--space-section) 0}
-.paper{background:var(--paper)}
-.mid{background:var(--mid)}
-.label{color:var(--muted);padding-top:6px}
-.rail h2{
-  font-size:var(--fs-section);line-height:var(--lh-tight);letter-spacing:-0.03em;
-  margin:0 0 12px;max-width:22em
+.rail{display:grid;grid-template-columns:var(--rail) minmax(0,1fr);gap:var(--gap);align-items:start}
+.kicker{
+  font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--muted);padding-top:8px;
 }
-.rail .lede{margin:0;color:#5c635c;max-width:40em}
+.slide h2{
+  font-size:40px;line-height:1.08;letter-spacing:-0.035em;margin:0 0 12px;font-weight:700;
+}
+.lede{margin:0;color:#5c635c;font-size:16px;line-height:1.65;max-width:40em}
 
-.cards{margin-top:36px;border-top:1px solid var(--line)}
-.card{
-  display:grid;
-  grid-template-columns:var(--rail) minmax(0,1fr) 200px;
-  gap:var(--rail-gap);
-  align-items:start;
-  padding:32px 0;
-  border-bottom:1px solid var(--line)
+/* —— HOME —— */
+#home{background:var(--d);color:#fff;padding-bottom:0;justify-content:stretch}
+#home .home-main{flex:1;display:flex;align-items:center;padding:24px 0 32px}
+.home-grid{
+  display:grid;grid-template-columns:minmax(0,0.92fr) minmax(0,1.08fr);
+  gap:52px;align-items:center;
 }
-.card small{
-  display:block;font-size:11px;font-weight:500;letter-spacing:0.06em;
-  color:#7a817a;padding-top:5px
+.eye{font-size:13px;font-weight:500;color:var(--lime);margin:0 0 16px}
+#home h1{
+  font-size:54px;line-height:1.04;letter-spacing:-0.04em;margin:0 0 18px;
+  max-width:15ch;font-weight:700;
 }
-.card .copy h3{font-size:var(--fs-card);line-height:1.3;letter-spacing:-0.015em;margin:0 0 8px;font-weight:700}
-.card .copy p{margin:0;font-size:var(--fs-body);line-height:1.55;color:#5c635c;max-width:34em}
-.card .mini{height:96px;margin-top:2px}
+#home .lede{color:#b4bab4;font-size:17px}
+.geo{margin-top:18px;font-size:13px;color:#e8ebe4}
 
-.why .rail h2{margin-bottom:16px}
-.why .rail .lede{line-height:1.7}
+.term{border:1px solid #2a2d2a;background:#070807}
+.term-bar{
+  height:34px;padding:0 14px;display:flex;align-items:center;justify-content:space-between;
+  border-bottom:1px solid #222;font-size:11px;letter-spacing:0.06em;color:#8d948d;text-transform:uppercase;
+}
+.term-title{padding:14px 14px 0;display:flex;justify-content:space-between;gap:12px;font-size:13px;color:#8d948d}
+.term-title b{color:#fff;font-size:14px;font-weight:500}
+.term-chart{height:210px;margin:10px 14px 0;border-bottom:1px solid #2a2d2a}
+.term-chart svg{width:100%;height:100%;display:block}
+.term-phases{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:12px 14px;font-size:11px;color:#8d948d;line-height:1.35}
+.term-phases b{display:block;color:#dfe3df;letter-spacing:0.06em;margin-bottom:2px}
 
-.process{
-  display:grid;grid-template-columns:repeat(3,1fr);gap:0;
-  margin-top:28px;border-top:1px solid #c5c9c0;counter-reset:step
+.evidence{background:var(--lime);color:var(--ink);margin-top:auto}
+.evidence-grid{display:grid;grid-template-columns:repeat(3,1fr)}
+.evidence-item{padding:20px 28px;border-right:1px solid rgba(23,25,23,.16)}
+.evidence-item:first-child{padding-left:0}
+.evidence-item:last-child{border-right:0;padding-right:0}
+.evidence-item b{display:block;font-size:32px;line-height:1;margin:0 0 8px;letter-spacing:-0.03em}
+.evidence-item span{display:block;font-size:13px;line-height:1.4;max-width:22em}
+
+/* —— RESEARCH —— */
+#research{background:var(--paper)}
+.questions{margin-top:28px;border-top:1px solid var(--line)}
+.q{
+  display:grid;grid-template-columns:var(--rail) minmax(0,1fr) 190px;
+  gap:var(--gap);align-items:start;padding:22px 0;border-bottom:1px solid var(--line);
 }
-.step{
-  position:relative;padding:24px 24px 24px 0;
-  border-bottom:1px solid #c5c9c0;counter-increment:step
+.q .tag{font-size:11px;font-weight:500;letter-spacing:0.08em;color:#7a817a;padding-top:5px}
+.q h3{font-size:20px;line-height:1.28;letter-spacing:-0.02em;margin:0 0 8px;font-weight:700}
+.q p{margin:0;color:#5c635c;font-size:15px;line-height:1.55;max-width:34em}
+.q .spark{height:88px}
+.q .spark svg{width:100%;height:100%;display:block}
+
+/* —— WHY —— */
+#why{background:#fafbf8}
+#why h2{max-width:16em}
+#why .lede{line-height:1.75}
+
+/* —— HOW (sketch: pipeline + Tech / Agents callouts) —— */
+#how{background:var(--mid)}
+.pipeline{
+  margin-top:28px;display:grid;grid-template-columns:repeat(3,1fr);
+  border-top:1px solid #c5c9c0;counter-reset:step;
 }
-.step:nth-child(3n+2),
-.step:nth-child(3n){padding-left:24px}
-.step:nth-child(3n){padding-right:0}
-.step:nth-child(3n+1),.step:nth-child(3n+2){border-right:1px solid #c5c9c0}
+.step{padding:22px 22px 22px 0;border-bottom:1px solid #c5c9c0;border-right:1px solid #c5c9c0;counter-increment:step}
+.step:nth-child(3n){border-right:0;padding-right:0}
+.step:nth-child(3n+2),.step:nth-child(3n){padding-left:22px}
 .step:before{
   content:counter(step);
-  display:block;font-size:11px;font-weight:700;color:#5f6a2a;margin:0 0 10px;letter-spacing:0.04em
+  display:grid;place-items:center;width:28px;height:28px;border-radius:50%;
+  background:var(--lime);color:var(--ink);font-size:12px;font-weight:700;margin:0 0 12px;
 }
-.step b{display:block;font-size:var(--fs-body);margin:0 0 6px}
-.step span{display:block;font-size:var(--fs-meta);color:var(--muted);line-height:1.45}
+.step b{display:block;font-size:17px;margin:0 0 6px}
+.step span{display:block;font-size:13px;color:var(--muted)}
 
-.support{
-  margin:24px 0 0;
-  font-size:var(--fs-meta);
-  line-height:1.55;
-  color:#5c635c;
-  max-width:46em
+.side-notes{
+  margin-top:22px;display:grid;grid-template-columns:1fr 1fr;gap:16px;
+  border-top:1px solid #c5c9c0;padding-top:18px;
 }
+.note{
+  border:1px solid #c5c9c0;background:rgba(255,255,255,.45);
+  padding:14px 16px;
+}
+.note strong{display:block;font-size:13px;letter-spacing:0.04em;text-transform:uppercase;margin:0 0 6px;color:#3d4a10}
+.note p{margin:0;font-size:13px;color:#5c635c;line-height:1.5}
 
-.phases{
-  display:grid;grid-template-columns:repeat(3,1fr);gap:0;
-  margin-top:28px;border-top:2px solid var(--ink)
-}
+/* —— ROAD —— */
+#road{background:var(--paper)}
+.phases{margin-top:28px;display:grid;grid-template-columns:repeat(3,1fr);border-top:2px solid var(--ink)}
 .phase{padding:20px 24px 0 0}
-.phase:not(:last-child){border-right:1px solid var(--line);padding-right:24px}
-.phase:not(:first-child){padding-left:24px}
-.phase small{display:inline-block;font-size:11px;font-weight:500;letter-spacing:0.04em;color:var(--muted);margin:0 0 10px}
-.phase:nth-child(2) small{background:var(--lime);color:var(--ink);padding:3px 6px}
-.phase h3{font-size:var(--fs-card);line-height:1.3;margin:0 0 8px;letter-spacing:-0.015em}
-.phase p{margin:0;font-size:var(--fs-body);line-height:1.55;color:#5c635c;padding-bottom:4px}
+.phase + .phase{border-left:1px solid var(--line);padding-left:24px}
+.phase .when{display:inline-block;font-size:11px;font-weight:500;letter-spacing:0.06em;color:var(--muted);margin:0 0 10px}
+.phase.is-now .when{background:var(--lime);color:var(--ink);padding:3px 7px}
+.phase h3{font-size:20px;margin:0 0 8px;letter-spacing:-0.02em}
+.phase p{margin:0;color:#5c635c;font-size:15px;line-height:1.55}
 
-.contact{padding:var(--space-section) 0;background:#fafbf8}
-.email{
-  display:inline-block;background:var(--lime);color:var(--ink);
-  padding:12px 16px;font-weight:700;margin-top:16px;font-size:var(--fs-body)
+/* —— CONTACT —— */
+#contact{background:#fafbf8}
+.mail{
+  display:inline-block;margin-top:18px;background:var(--lime);color:var(--ink);
+  padding:12px 16px;font-weight:700;
 }
-footer{padding:24px 0;color:#8d948d;font-size:var(--fs-meta)}
-.foot{display:flex;justify-content:space-between;gap:16px}
+.legal{
+  margin-top:36px;padding-top:18px;border-top:1px solid var(--line);
+  display:flex;justify-content:space-between;gap:16px;font-size:13px;color:#8d948d;
+}
 
 @media(max-width:900px){
-  :root{--fs-hero:40px;--fs-section:30px;--space-section:64px;--rail-gap:20px}
+  :root{--gap:18px}
   .w{width:calc(100% - 36px)}
   nav{display:none}
-  .hg,.rail,.card{grid-template-columns:1fr;gap:16px}
-  .hero{padding:calc(40px + var(--nav-h)) 0 48px}
-  .hero h1{max-width:none}
-  .metrics{grid-template-columns:1fr}
-  .metric{padding:18px 0;border-right:0;border-bottom:1px solid rgba(23,25,23,.18)}
-  .metric:first-child,.metric:last-child{padding-left:0;padding-right:0}
-  .metric:last-child{border-bottom:0}
-  .card .mini{height:120px;width:100%;max-width:280px}
-  .label{padding-top:0}
-  .process{grid-template-columns:1fr}
-  .step,.step:nth-child(3n+1),.step:nth-child(3n+2){padding:16px 0;border-right:0}
-  .phases{grid-template-columns:1fr}
-  .phase,.phase:not(:last-child),.phase:not(:first-child){padding:20px 0;border-right:0}
-  .phase:not(:last-child){border-bottom:1px solid var(--line)}
+  html{scroll-snap-type:y proximity}
+  .slide{justify-content:flex-start;padding-top:calc(var(--nav-h) + 28px)}
+  #home h1{font-size:38px;max-width:none}
+  .home-grid,.rail,.q{grid-template-columns:1fr;gap:14px}
+  .evidence-grid,.pipeline,.phases,.side-notes{grid-template-columns:1fr}
+  .evidence-item,.step,.phase{padding:16px 0;border-right:0;border-left:0}
+  .evidence-item + .evidence-item,.step + .step,.phase + .phase{border-top:1px solid rgba(23,25,23,.14)}
+  .step:nth-child(3n+2),.step:nth-child(3n){padding-left:0}
+  .q .spark{height:110px;max-width:280px}
+}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto;scroll-snap-type:none}
 }
 </style>
 </head>
 <body>
 <header>
   <div class="w nav">
-    <a class="brand" href="#">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
-        <path fill="#e8eef6" d="M16 25.2C11.2 23.6 6.4 20.4 4.2 16.6c4.1 1.6 8.4 4.2 11.8 8.6z"/>
-        <path fill="#e8eef6" d="M16 25.2c4.8-1.6 9.6-4.8 11.8-8.6-4.1 1.6-8.4 4.2-11.8 8.6z"/>
-        <path fill="#e8eef6" d="M16 24.6C11.6 20.4 8.4 14.6 8.6 9.8c3.2 3.2 6.2 8 7.4 14.8z"/>
-        <path fill="#e8eef6" d="M16 24.6c4.4-4.2 7.6-10 7.4-14.8-3.2 3.2-6.2 8-7.4 14.8z"/>
-        <path fill="#e8eef6" d="M16 24.8c-2.8-4.8-4.2-10.2-3.2-14.6 1.8 3.4 2.8 8.2 3.2 14.6z"/>
-        <path fill="#e8eef6" d="M16 24.8c2.8-4.8 4.2-10.2 3.2-14.6-1.8 3.4-2.8 8.2-3.2 14.6z"/>
-        <path fill="#e8eef6" d="M16 6.2c1.9 3.6 2.5 9.2.4 18.6h-.8C13.5 15.4 14.1 9.8 16 6.2z"/>
-        <path fill="none" stroke="#c8f135" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" d="M21.4 10.2c2.2-2.4 4.6-4.4 7.4-5.6"/>
-        <path fill="#c8f135" d="M26.4 2.4l5 2.1-3.4 4.1-.8-2.8-2.8-.8z"/>
-      </svg>
+    <a class="brand" href="#home">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+          <path fill="#e8eef6" d="M16 25.2C11.2 23.6 6.4 20.4 4.2 16.6c4.1 1.6 8.4 4.2 11.8 8.6z"/>
+          <path fill="#e8eef6" d="M16 25.2c4.8-1.6 9.6-4.8 11.8-8.6-4.1 1.6-8.4 4.2-11.8 8.6z"/>
+          <path fill="#e8eef6" d="M16 24.6C11.6 20.4 8.4 14.6 8.6 9.8c3.2 3.2 6.2 8 7.4 14.8z"/>
+          <path fill="#e8eef6" d="M16 24.6c4.4-4.2 7.6-10 7.4-14.8-3.2 3.2-6.2 8-7.4 14.8z"/>
+          <path fill="#e8eef6" d="M16 24.8c-2.8-4.8-4.2-10.2-3.2-14.6 1.8 3.4 2.8 8.2 3.2 14.6z"/>
+          <path fill="#e8eef6" d="M16 24.8c2.8-4.8 4.2-10.2 3.2-14.6-1.8 3.4-2.8 8.2-3.2 14.6z"/>
+          <path fill="#e8eef6" d="M16 6.2c1.9 3.6 2.5 9.2.4 18.6h-.8C13.5 15.4 14.1 9.8 16 6.2z"/>
+          <path fill="none" stroke="#c8f135" stroke-width="1.7" stroke-linecap="round" d="M21.4 10.2c2.2-2.4 4.6-4.4 7.4-5.6"/>
+          <path fill="#c8f135" d="M26.4 2.4l5 2.1-3.4 4.1-.8-2.8-2.8-.8z"/>
+        </svg>
+      </span>
       <span>SriDah</span>
     </a>
     <nav>
@@ -211,105 +237,131 @@ footer{padding:24px 0;color:#8d948d;font-size:var(--fs-meta)}
   </div>
 </header>
 
-<div class="hero">
-  <div class="w hg">
-    <div>
-      <div class="eye">Market Intelligence Platform</div>
-      <h1>SriDah studies how markets behave.</h1>
-      <p>We turn market observations into measurable questions, test them across history, and keep what continues to hold.</p>
-      <div class="start">Starting with Indian equities.</div>
-    </div>
-    <div class="term">
-      <div class="tt"><span>Research</span><span>Post-expansion</span></div>
-      <div class="ct">
-        <b>Post-expansion participation</b>
-        <span>One behaviour under study</span>
+<!-- Sketch screen 1: Home -->
+<section class="slide" id="home">
+  <div class="home-main">
+    <div class="w home-grid">
+      <div>
+        <div class="eye">Market Intelligence Platform</div>
+        <h1>SriDah studies how markets behave.</h1>
+        <p class="lede">We turn market observations into measurable questions, test them across history, and keep what continues to hold.</p>
+        <div class="geo">Starting with Indian equities.</div>
       </div>
-      <div class="chart">
-        <svg viewBox="0 0 620 265" preserveAspectRatio="none" aria-hidden="true">
-          <polyline points="0,214 35,208 70,197 105,180 140,150 175,111 210,76 245,55 280,48 315,55 350,61 385,57 420,62 455,58 490,51 525,38 560,27 590,21 620,12" fill="none" stroke="#c8f135" stroke-width="3"/>
-          <g opacity=".8">
-            <rect x="40" y="210" width="13" height="55" fill="#426785"/>
-            <rect x="85" y="195" width="13" height="70" fill="#2c8a61"/>
-            <rect x="130" y="180" width="13" height="85" fill="#2c8a61"/>
-            <rect x="175" y="170" width="13" height="95" fill="#2c8a61"/>
-            <rect x="300" y="240" width="13" height="25" fill="#c25750"/>
-            <rect x="345" y="247" width="13" height="18" fill="#aaa"/>
-            <rect x="390" y="249" width="13" height="16" fill="#aaa"/>
-            <rect x="435" y="244" width="13" height="21" fill="#aaa"/>
-            <rect x="500" y="215" width="13" height="50" fill="#2c8a61"/>
-            <rect x="545" y="195" width="13" height="70" fill="#2c8a61"/>
-            <rect x="590" y="175" width="13" height="90" fill="#2c8a61"/>
-          </g>
-        </svg>
-      </div>
-      <div class="cf">
-        <div><b>EXPANSION</b>price rises, volume joins</div>
-        <div><b>BASE</b>participation fades</div>
-        <div><b>RE-EXPANSION</b>demand returns</div>
+      <div class="term">
+        <div class="term-bar"><span>Research</span><span>Post-expansion</span></div>
+        <div class="term-title">
+          <b>Post-expansion participation</b>
+          <span>One behaviour under study</span>
+        </div>
+        <div class="term-chart">
+          <svg viewBox="0 0 640 280" preserveAspectRatio="none" aria-hidden="true">
+            <g stroke="#1e221e" stroke-width="1">
+              <line x1="0" y1="56" x2="640" y2="56"/><line x1="0" y1="112" x2="640" y2="112"/>
+              <line x1="0" y1="168" x2="640" y2="168"/><line x1="0" y1="224" x2="640" y2="224"/>
+              <line x1="128" y1="0" x2="128" y2="280"/><line x1="256" y1="0" x2="256" y2="280"/>
+              <line x1="384" y1="0" x2="384" y2="280"/><line x1="512" y1="0" x2="512" y2="280"/>
+            </g>
+            <g opacity=".9">
+              <rect x="18" y="200" width="10" height="60" fill="#426785"/>
+              <rect x="40" y="180" width="10" height="80" fill="#2c8a61"/>
+              <rect x="62" y="160" width="10" height="100" fill="#2c8a61"/>
+              <rect x="84" y="145" width="10" height="115" fill="#2c8a61"/>
+              <rect x="106" y="150" width="10" height="110" fill="#2c8a61"/>
+              <rect x="140" y="220" width="10" height="40" fill="#c25750"/>
+              <rect x="162" y="235" width="10" height="25" fill="#8a908a"/>
+              <rect x="184" y="242" width="10" height="18" fill="#8a908a"/>
+              <rect x="206" y="245" width="10" height="15" fill="#8a908a"/>
+              <rect x="228" y="248" width="10" height="12" fill="#8a908a"/>
+              <rect x="250" y="246" width="10" height="14" fill="#8a908a"/>
+              <rect x="280" y="200" width="10" height="60" fill="#2c8a61"/>
+              <rect x="302" y="175" width="10" height="85" fill="#2c8a61"/>
+              <rect x="324" y="150" width="10" height="110" fill="#2c8a61"/>
+              <rect x="346" y="125" width="10" height="135" fill="#2c8a61"/>
+              <rect x="368" y="100" width="10" height="160" fill="#2c8a61"/>
+              <rect x="390" y="80" width="10" height="180" fill="#2c8a61"/>
+              <rect x="412" y="60" width="10" height="200" fill="#2c8a61"/>
+              <rect x="434" y="45" width="10" height="215" fill="#2c8a61"/>
+              <rect x="456" y="35" width="10" height="225" fill="#2c8a61"/>
+              <rect x="478" y="28" width="10" height="232" fill="#2c8a61"/>
+              <rect x="500" y="22" width="10" height="238" fill="#2c8a61"/>
+              <rect x="522" y="16" width="10" height="244" fill="#2c8a61"/>
+              <rect x="544" y="12" width="10" height="248" fill="#2c8a61"/>
+              <rect x="566" y="8" width="10" height="252" fill="#2c8a61"/>
+              <rect x="588" y="5" width="10" height="255" fill="#2c8a61"/>
+            </g>
+            <polyline fill="none" stroke="#c8f135" stroke-width="3.2" stroke-linejoin="round"
+              points="10,200 50,185 90,155 130,115 170,95 210,100 250,105 290,88 340,55 390,30 440,16 500,8 560,4 620,2"/>
+          </svg>
+        </div>
+        <div class="term-phases">
+          <div><b>EXPANSION</b>price rises, volume joins</div>
+          <div><b>BASE</b>participation fades</div>
+          <div><b>RE-EXPANSION</b>demand returns</div>
+        </div>
       </div>
     </div>
   </div>
-</div>
-
-<div class="bar">
-  <div class="w metrics">
-    <div class="metric"><b>2,903</b><span>NSE stocks in the study universe</span></div>
-    <div class="metric"><b>325</b><span>complete expansion → base → re-expansion sequences</span></div>
-    <div class="metric"><b>30 of 46</b><span>names in one discovery cohort later re-expanded</span></div>
+  <div class="evidence">
+    <div class="w evidence-grid">
+      <div class="evidence-item"><b>2,903</b><span>NSE stocks in the study universe</span></div>
+      <div class="evidence-item"><b>325</b><span>complete expansion → base → re-expansion sequences</span></div>
+      <div class="evidence-item"><b>30 of 46</b><span>names in one discovery cohort later re-expanded</span></div>
+    </div>
   </div>
-</div>
+</section>
 
-<section class="paper" id="research">
-  <div class="w">
+<!-- Sketch screen 2: Research -->
+<section class="slide" id="research">
+  <div class="w slide-inner">
     <div class="rail">
-      <div class="label">WHAT WE STUDY</div>
+      <div class="kicker">What we study</div>
       <div>
         <h2>Current questions.</h2>
         <p class="lede">Each starts with an observed market behaviour. The data decides whether it is worth keeping.</p>
       </div>
     </div>
-    <div class="cards">
-      <div class="card">
-        <small>MARKET RESILIENCE</small>
-        <div class="copy">
+    <div class="questions">
+      <div class="q">
+        <div class="tag">Market resilience</div>
+        <div>
           <h3>Which stocks refuse to fall when the market weakens?</h3>
           <p>Relative strength in index stress, then a test for continuation.</p>
         </div>
-        <div class="mini">
-          <svg viewBox="0 0 330 145" aria-hidden="true">
-            <polyline points="0,25 60,35 120,58 180,82 240,110 330,132" fill="none" stroke="#aaa" stroke-width="3"/>
-            <polyline points="0,31 60,29 120,36 180,40 240,38 330,28" fill="none" stroke="#2c8a61" stroke-width="3"/>
+        <div class="spark">
+          <svg viewBox="0 0 340 120" aria-hidden="true">
+            <polyline fill="none" stroke="#b0b5b0" stroke-width="2.5" points="0,18 60,28 120,48 180,70 240,92 340,112"/>
+            <polyline fill="none" stroke="#2c8a61" stroke-width="2.5" points="0,42 60,40 120,38 180,36 240,34 340,28"/>
           </svg>
         </div>
       </div>
-      <div class="card">
-        <small>POST-EXPANSION</small>
-        <div class="copy">
+      <div class="q">
+        <div class="tag">Post-expansion</div>
+        <div>
           <h3>What happens when volume disappears after a strong move?</h3>
           <p>Whether fading participation changes continuation, speed, or drawdown.</p>
         </div>
-        <div class="mini">
-          <svg viewBox="0 0 330 145" aria-hidden="true">
-            <polyline points="0,115 55,94 110,45 150,30 205,40 250,37 290,25 330,13" fill="none" stroke="#171917" stroke-width="3"/>
-            <rect x="40" y="80" width="15" height="65" fill="#2c8a61"/>
-            <rect x="95" y="55" width="15" height="90" fill="#2c8a61"/>
-            <rect x="175" y="120" width="15" height="25" fill="#aaa"/>
-            <rect x="220" y="127" width="15" height="18" fill="#aaa"/>
-            <rect x="285" y="90" width="15" height="55" fill="#2c8a61"/>
+        <div class="spark">
+          <svg viewBox="0 0 340 120" aria-hidden="true">
+            <polyline fill="none" stroke="#171917" stroke-width="2.5" points="0,95 50,78 100,42 140,28 190,36 240,34 280,22 340,10"/>
+            <rect x="30" y="70" width="12" height="50" fill="#2c8a61"/>
+            <rect x="70" y="48" width="12" height="72" fill="#2c8a61"/>
+            <rect x="160" y="95" width="12" height="25" fill="#b0b5b0"/>
+            <rect x="200" y="100" width="12" height="20" fill="#b0b5b0"/>
+            <rect x="250" y="78" width="12" height="42" fill="#2c8a61"/>
+            <rect x="290" y="55" width="12" height="65" fill="#2c8a61"/>
           </svg>
         </div>
       </div>
-      <div class="card">
-        <small>PRICE VELOCITY</small>
-        <div class="copy">
+      <div class="q">
+        <div class="tag">Price velocity</div>
+        <div>
           <h3>When price accelerates, is it strength or exhaustion?</h3>
           <p>Abnormal acceleration, split into demand dominance versus buyer exhaustion.</p>
         </div>
-        <div class="mini">
-          <svg viewBox="0 0 330 145" aria-hidden="true">
-            <polyline points="0,120 70,110 140,100 200,85 245,55 280,10 300,40 330,55" fill="none" stroke="#171917" stroke-width="3"/>
-            <line x1="280" y1="8" x2="280" y2="140" stroke="#c25750" stroke-dasharray="4 4"/>
+        <div class="spark">
+          <svg viewBox="0 0 340 120" aria-hidden="true">
+            <line x1="250" y1="4" x2="250" y2="116" stroke="#c25750" stroke-width="1.5" stroke-dasharray="4 4"/>
+            <polyline fill="none" stroke="#171917" stroke-width="2.5" points="0,95 70,90 140,84 200,72 230,48 250,8 270,38 300,48 340,55"/>
           </svg>
         </div>
       </div>
@@ -317,10 +369,11 @@ footer{padding:24px 0;color:#8d948d;font-size:var(--fs-meta)}
   </div>
 </section>
 
-<section class="why" id="why">
-  <div class="w">
+<!-- Sketch screen 3: Why -->
+<section class="slide" id="why">
+  <div class="w slide-inner">
     <div class="rail">
-      <div class="label">WHY SRIDAH</div>
+      <div class="kicker">Why SriDah</div>
       <div>
         <h2>Markets are full of observations. Very few are tested properly.</h2>
         <p class="lede">Traders notice unusual volume, stocks resisting market weakness, sudden acceleration and hundreds of other behaviours. <b>Some matter. Many don't.</b><br><br>SriDah is being built to tell the difference.</p>
@@ -329,14 +382,15 @@ footer{padding:24px 0;color:#8d948d;font-size:var(--fs-meta)}
   </div>
 </section>
 
-<section class="how mid" id="how">
-  <div class="w">
+<!-- Sketch screen 4: How — pipeline + Tech / Agents boxes from the board -->
+<section class="slide" id="how">
+  <div class="w slide-inner">
     <div class="rail">
-      <div class="label">HOW WE STUDY MARKETS</div>
+      <div class="kicker">How we study markets</div>
       <div>
         <h2>Research at the core. Technology where it adds information or scale.</h2>
         <p class="lede">Built from the research outward, not from a dashboard inward.</p>
-        <div class="process">
+        <div class="pipeline">
           <div class="step"><b>Observe</b><span>Find a behaviour.</span></div>
           <div class="step"><b>Measure</b><span>Make it objective.</span></div>
           <div class="step"><b>Test</b><span>Run historical cohorts.</span></div>
@@ -344,31 +398,41 @@ footer{padding:24px 0;color:#8d948d;font-size:var(--fs-meta)}
           <div class="step"><b>Monitor</b><span>Find it live.</span></div>
           <div class="step"><b>Learn</b><span>Feed outcomes back.</span></div>
         </div>
-        <p class="support">Where the work needs scale or pattern recognition, we use statistical models, machine learning, and language models. Agents come later, only inside rules the research has already earned.</p>
+        <div class="side-notes">
+          <div class="note">
+            <strong>Tech</strong>
+            <p>Statistical models, machine learning, and language models where the work needs scale or pattern recognition.</p>
+          </div>
+          <div class="note">
+            <strong>Agents</strong>
+            <p>Come later, only inside rules the research has already earned.</p>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<section class="road paper" id="road">
-  <div class="w">
+<!-- Sketch screen 5: Road — Past / Now / Next -->
+<section class="slide" id="road">
+  <div class="w slide-inner">
     <div class="rail">
-      <div class="label">ROAD AHEAD</div>
+      <div class="kicker">Road ahead</div>
       <div>
         <h2>From research to continuously operating market intelligence.</h2>
         <div class="phases">
           <div class="phase">
-            <small>PAST</small>
+            <div class="when">Past</div>
             <h3>Research and validation</h3>
             <p>Build evidence around repeatable behaviours in Indian equities.</p>
           </div>
-          <div class="phase">
-            <small>NOW</small>
+          <div class="phase is-now">
+            <div class="when">Now</div>
             <h3>Market intelligence</h3>
             <p>Scan markets, surface opportunities and provide decision context.</p>
           </div>
           <div class="phase">
-            <small>NEXT</small>
+            <div class="when">Next</div>
             <h3>Agentic execution</h3>
             <p>Monitor conditions and support execution within defined rules.</p>
           </div>
@@ -378,22 +442,58 @@ footer{padding:24px 0;color:#8d948d;font-size:var(--fs-meta)}
   </div>
 </section>
 
-<div class="contact" id="contact">
-  <div class="w rail">
-    <div class="label">CONTACT</div>
-    <div>
-      <h2>Talk about the research.</h2>
-      <p class="lede">Research questions, collaboration, or a market behaviour worth testing. Write to us.</p>
-      <a class="email" href="mailto:hello@sridah.in">hello@sridah.in</a>
+<!-- Sketch screen 6: Contact -->
+<section class="slide" id="contact">
+  <div class="w slide-inner">
+    <div class="rail">
+      <div class="kicker">Contact</div>
+      <div>
+        <h2>Talk about the research.</h2>
+        <p class="lede">Research questions, collaboration, or a market behaviour worth testing. Write to us.</p>
+        <a class="mail" href="mailto:hello@sridah.in">hello@sridah.in</a>
+        <div class="legal">
+          <div><b>SriDah</b> · Market intelligence for Indian equities</div>
+          <div>© 2026 SriDah · Not investment advice.</div>
+        </div>
+      </div>
     </div>
   </div>
-</div>
+</section>
 
-<footer>
-  <div class="w foot">
-    <div><b>SriDah</b> · Market intelligence for Indian equities</div>
-    <div>© 2026 SriDah · Not investment advice.</div>
-  </div>
-</footer>
+<script>
+(function () {
+  var links = [].slice.call(document.querySelectorAll("nav a[href^='#']"));
+  var slides = [].slice.call(document.querySelectorAll(".slide[id]"));
+  var map = {};
+  links.forEach(function (a) { map[a.getAttribute("href").slice(1)] = a; });
+
+  function setOn(id) {
+    links.forEach(function (a) { a.classList.remove("is-on"); });
+    if (map[id]) map[id].classList.add("is-on");
+  }
+
+  function fromHash() {
+    var id = (location.hash || "#home").slice(1);
+    setOn(id === "home" ? "" : id);
+    if (id === "home") links.forEach(function (a) { a.classList.remove("is-on"); });
+  }
+
+  window.addEventListener("hashchange", fromHash);
+  fromHash();
+
+  if (!("IntersectionObserver" in window)) return;
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      if (e.target.id === "home") {
+        links.forEach(function (a) { a.classList.remove("is-on"); });
+        return;
+      }
+      setOn(e.target.id);
+    });
+  }, { rootMargin: "-45% 0px -45% 0px", threshold: 0 });
+  slides.forEach(function (s) { io.observe(s); });
+})();
+</script>
 </body>
 </html>

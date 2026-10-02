@@ -1,0 +1,516 @@
+
+<title>SriDah</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap">
+
+<style>
+:root {
+  --bg: #ffffff;
+  --bg-alt: #f7f7f5;
+  --fg: #0d0d0d;
+  --fg2: #454545;
+  --fg3: #7a7a7a;
+  --fg4: #b8b8b8;
+  --green: #2aad52;
+  --border: #e4e4e2;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0b0b0b; --bg-alt: #111111; --fg: #f0f0ef;
+    --fg2: #aaaaaa; --fg3: #686868; --fg4: #3a3a3a; --border: #232323;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0b0b0b; --bg-alt: #111111; --fg: #f0f0ef;
+  --fg2: #aaaaaa; --fg3: #686868; --fg4: #3a3a3a; --border: #232323;
+}
+
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--fg);font-size:14px;line-height:1.6;}
+
+/* NAV */
+.nav{position:sticky;top:env(safe-area-inset-top,0px);background:var(--bg);border-bottom:1px solid var(--border);z-index:100;display:flex;align-items:center;padding:0 40px;height:52px;gap:0;}
+.logo{display:flex;align-items:center;gap:8px;font-size:19px;font-weight:600;letter-spacing:-0.025em;flex-shrink:0;margin-right:48px;text-decoration:none;color:var(--fg);}
+.logo-bar{width:3px;height:20px;background:var(--green);border-radius:1px;flex-shrink:0;}
+.nav-links{display:flex;gap:28px;flex:1;}
+.nav-links a{text-decoration:none;color:var(--fg3);font-size:13px;}
+.nav-links a:hover{color:var(--fg);}
+.nav-tag{font-size:11.5px;color:var(--fg3);white-space:nowrap;}
+
+/* LAYOUT */
+.section{padding:88px 40px;}
+.section-alt{background:var(--bg-alt);}
+.wrap{max-width:1080px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;}
+
+.eyebrow{font-size:10.5px;font-weight:500;letter-spacing:0.13em;color:var(--fg3);text-transform:uppercase;margin-bottom:18px;}
+h1,h2{font-weight:400;letter-spacing:-0.025em;line-height:1.1;text-wrap:balance;margin-bottom:20px;}
+h1{font-size:clamp(28px,3.8vw,44px);}
+h2{font-size:clamp(24px,3.2vw,38px);}
+.green{color:var(--green);}
+.body-text{font-size:13.5px;color:var(--fg2);line-height:1.7;max-width:320px;}
+.rule{width:28px;height:2px;background:var(--green);margin:22px 0;}
+.tags{font-size:10.5px;font-weight:500;letter-spacing:0.1em;color:var(--fg3);text-transform:uppercase;}
+
+/* STATS */
+.stats-grid{margin-top:36px;padding-top:20px;border-top:1px solid var(--border);display:grid;grid-template-columns:1fr 1fr 1.6fr;gap:20px;}
+.stat-eyebrow{font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--fg3);margin-bottom:6px;}
+.stat-eyebrow-green{font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--green);font-weight:500;margin-bottom:6px;}
+.stat-num{font-size:36px;font-weight:300;color:var(--green);letter-spacing:-0.03em;line-height:1;margin-bottom:4px;font-variant-numeric:tabular-nums;}
+.stat-num-sm{font-size:26px;font-weight:300;color:var(--green);letter-spacing:-0.02em;line-height:1.1;margin-bottom:4px;}
+.stat-sub{font-size:11.5px;color:var(--fg3);line-height:1.4;}
+
+/* PHASES */
+.phases-row{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;}
+.phase{border-top:1px solid var(--border);padding-top:14px;}
+.phase-num{font-size:11px;color:var(--fg4);margin-bottom:10px;}
+.phase-num-pill{width:20px;height:20px;background:var(--green);color:#fff;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:9px;font-weight:600;margin-bottom:10px;}
+.phase-title{font-size:12.5px;font-weight:500;margin-bottom:6px;}
+.phase-desc{font-size:11.5px;color:var(--fg3);line-height:1.5;}
+
+/* FOOTER */
+footer{padding:36px 40px;border-top:1px solid var(--border);}
+.footer-inner{max-width:1080px;margin:0 auto;}
+.footer-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;flex-wrap:wrap;gap:12px;}
+.footer-left{display:flex;align-items:center;gap:12px;}
+.footer-tagline{font-size:12px;color:var(--fg3);}
+.footer-email{display:flex;align-items:center;gap:7px;font-size:12.5px;color:var(--fg2);text-decoration:none;}
+.footer-bottom{padding-top:20px;border-top:1px solid var(--border);display:flex;justify-content:space-between;font-size:11.5px;color:var(--fg3);flex-wrap:wrap;gap:8px;}
+
+/* VIZ */
+canvas{display:block;max-width:100%;height:auto;}
+svg.viz{display:block;width:100%;overflow:visible;}
+
+/* RESPONSIVE */
+@media(max-width:700px){
+  .nav{padding:0 16px;}
+  .nav-links,.nav-tag{display:none;}
+  .section{padding:52px 16px;}
+  .wrap{grid-template-columns:1fr;gap:32px;}
+  h1{font-size:28px;}h2{font-size:24px;}
+  .stats-grid{grid-template-columns:1fr 1fr;}
+  .phases-row{grid-template-columns:1fr 1fr;}
+  footer{padding:28px 16px;}
+}
+</style>
+
+<!-- NAV -->
+<nav class="nav">
+  <a class="logo" href="#">
+    <div class="logo-bar"></div>SriDah
+  </a>
+  <div class="nav-links">
+    <a href="#what">What is SriDah</a>
+    <a href="#how">How it works</a>
+    <a href="#why">Why now</a>
+    <a href="#next">What next</a>
+    <a href="#footer">Contact</a>
+  </div>
+  <div class="nav-tag">Indian Equities. A Deeper Perspective.</div>
+</nav>
+
+<!-- HERO -->
+<section class="section" id="what">
+  <div class="wrap" style="align-items:flex-start;">
+    <div>
+      <div class="eyebrow">A Quant Platform for Indian Equities</div>
+      <h1>Find what is working.<br><span class="green">Test whether it matters.</span><br>Track whether it continues.</h1>
+      <p class="body-text">SriDah is a Quant Platform for Indian Equities, built to identify and monitor evidence-backed market opportunities.</p>
+      <div class="rule"></div>
+      <div class="tags">Market Data / Statistical Models / ML / LLMs / Agents</div>
+    </div>
+    <div style="position:relative;">
+      <canvas id="heroCanvas" width="480" height="360" style="width:100%;"></canvas>
+    </div>
+  </div>
+</section>
+
+<!-- THE OPPORTUNITY -->
+<section class="section section-alt" id="opportunity">
+  <div class="wrap">
+    <div>
+      <div class="eyebrow">The Opportunity</div>
+      <h2>A large market.<br>A small set of<br><span class="green">evidence-backed<br>opportunities.</span></h2>
+      <p class="body-text">SriDah searches across the market for unusual behaviour, then tests whether it has mattered historically.</p>
+      <div class="stats-grid">
+        <div>
+          <div class="stat-eyebrow">Research Scale</div>
+          <div class="stat-num">2,903</div>
+          <div class="stat-sub">NSE stocks analysed</div>
+        </div>
+        <div>
+          <div class="stat-eyebrow">&nbsp;</div>
+          <div class="stat-num">325</div>
+          <div class="stat-sub">complete E → B → R sequences identified</div>
+        </div>
+        <div>
+          <div class="stat-eyebrow-green">One Finding</div>
+          <div class="stat-num-sm">30 of 46</div>
+          <div class="stat-sub">Stocks retaining price while participation normalised subsequently re-expanded in one discovery cohort.</div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <svg viewBox="0 0 420 250" class="viz" xmlns="http://www.w3.org/2000/svg" font-family="Inter,sans-serif">
+        <!-- Column headers -->
+        <text x="50" y="14" text-anchor="middle" font-size="9" fill="currentColor" opacity="0.5" font-weight="500">The Market</text>
+        <text x="50" y="25" text-anchor="middle" font-size="8" fill="currentColor" opacity="0.4">2,000+ stocks</text>
+        <text x="168" y="14" text-anchor="middle" font-size="9" fill="currentColor" opacity="0.5" font-weight="500">Unusual behaviour</text>
+        <text x="293" y="14" text-anchor="middle" font-size="9" fill="currentColor" opacity="0.5" font-weight="500">Historical evidence</text>
+        <text x="390" y="14" text-anchor="middle" font-size="9" fill="currentColor" opacity="0.5" font-weight="500">Opportunities</text>
+        <text x="390" y="25" text-anchor="middle" font-size="8" fill="currentColor" opacity="0.4">to investigate</text>
+        <!-- Dividers -->
+        <line x1="50" y1="32" x2="50" y2="248" stroke="currentColor" stroke-width="0.5" opacity="0.1"/>
+        <line x1="168" y1="32" x2="168" y2="248" stroke="currentColor" stroke-width="0.5" opacity="0.1"/>
+        <line x1="293" y1="32" x2="293" y2="248" stroke="currentColor" stroke-width="0.5" opacity="0.1"/>
+        <line x1="390" y1="32" x2="390" y2="248" stroke="currentColor" stroke-width="0.5" opacity="0.1"/>
+        <!-- Column 1: many small grey dots -->
+        <circle cx="28" cy="55" r="2" fill="#999" opacity="0.5"/><circle cx="44" cy="62" r="2" fill="#999" opacity="0.5"/><circle cx="60" cy="50" r="2" fill="#999" opacity="0.5"/><circle cx="72" cy="67" r="2" fill="#999" opacity="0.5"/><circle cx="36" cy="75" r="2" fill="#999" opacity="0.5"/><circle cx="52" cy="80" r="2" fill="#999" opacity="0.5"/><circle cx="66" cy="72" r="2" fill="#999" opacity="0.5"/><circle cx="22" cy="88" r="2" fill="#999" opacity="0.5"/><circle cx="46" cy="93" r="2" fill="#999" opacity="0.5"/><circle cx="62" cy="90" r="2" fill="#999" opacity="0.5"/><circle cx="76" cy="83" r="2" fill="#999" opacity="0.5"/><circle cx="32" cy="100" r="2" fill="#999" opacity="0.5"/><circle cx="55" cy="106" r="2" fill="#999" opacity="0.5"/><circle cx="68" cy="98" r="2" fill="#999" opacity="0.5"/><circle cx="38" cy="112" r="2" fill="#999" opacity="0.5"/><circle cx="54" cy="120" r="2" fill="#999" opacity="0.5"/><circle cx="70" cy="115" r="2" fill="#999" opacity="0.5"/><circle cx="24" cy="128" r="2" fill="#999" opacity="0.5"/><circle cx="48" cy="134" r="2" fill="#999" opacity="0.5"/><circle cx="64" cy="130" r="2" fill="#999" opacity="0.5"/><circle cx="78" cy="140" r="2" fill="#999" opacity="0.5"/><circle cx="34" cy="146" r="2" fill="#999" opacity="0.5"/><circle cx="58" cy="152" r="2" fill="#999" opacity="0.5"/><circle cx="44" cy="160" r="2" fill="#999" opacity="0.5"/><circle cx="70" cy="155" r="2" fill="#999" opacity="0.5"/><circle cx="20" cy="165" r="2" fill="#999" opacity="0.5"/><circle cx="50" cy="170" r="2" fill="#999" opacity="0.5"/><circle cx="65" cy="167" r="2" fill="#999" opacity="0.5"/><circle cx="38" cy="178" r="2" fill="#999" opacity="0.5"/><circle cx="56" cy="185" r="2" fill="#999" opacity="0.5"/><circle cx="72" cy="180" r="2" fill="#999" opacity="0.5"/><circle cx="28" cy="192" r="2" fill="#999" opacity="0.5"/><circle cx="48" cy="198" r="2" fill="#999" opacity="0.5"/><circle cx="62" cy="194" r="2" fill="#999" opacity="0.5"/><circle cx="76" cy="202" r="2" fill="#999" opacity="0.5"/><circle cx="36" cy="208" r="2" fill="#999" opacity="0.5"/><circle cx="54" cy="215" r="2" fill="#999" opacity="0.5"/><circle cx="66" cy="210" r="2" fill="#999" opacity="0.5"/><circle cx="22" cy="222" r="2" fill="#999" opacity="0.5"/><circle cx="46" cy="228" r="2" fill="#999" opacity="0.5"/><circle cx="60" cy="224" r="2" fill="#999" opacity="0.5"/><circle cx="38" cy="235" r="2" fill="#999" opacity="0.5"/><circle cx="55" cy="242" r="2" fill="#999" opacity="0.5"/>
+        <!-- Connecting flow lines col1→col2 -->
+        <path d="M78 95 C110 95,138 100,152 100" stroke="#2aad52" stroke-width="1.2" fill="none" opacity="0.4"/>
+        <path d="M78 120 C110 120,138 130,152 130" stroke="#2aad52" stroke-width="1.2" fill="none" opacity="0.4"/>
+        <path d="M78 150 C110 150,138 160,152 160" stroke="#2aad52" stroke-width="1.2" fill="none" opacity="0.4"/>
+        <path d="M78 180 C110 180,138 188,152 188" stroke="#2aad52" stroke-width="1.2" fill="none" opacity="0.35"/>
+        <path d="M78 210 C110 210,138 215,152 215" stroke="#2aad52" stroke-width="1.2" fill="none" opacity="0.3"/>
+        <!-- Column 2: medium green dots -->
+        <circle cx="153" cy="95" r="4" fill="#2aad52" opacity="0.6"/><circle cx="174" cy="108" r="5" fill="#2aad52" opacity="0.7"/><circle cx="157" cy="128" r="3.5" fill="#2aad52" opacity="0.55"/><circle cx="180" cy="145" r="6" fill="#2aad52" opacity="0.8"/><circle cx="154" cy="162" r="4" fill="#2aad52" opacity="0.6"/><circle cx="172" cy="178" r="5" fill="#2aad52" opacity="0.7"/><circle cx="160" cy="196" r="4.5" fill="#2aad52" opacity="0.65"/><circle cx="177" cy="213" r="3.5" fill="#2aad52" opacity="0.5"/>
+        <!-- Connecting flow lines col2→col3 -->
+        <path d="M188 100 C222 100,255 108,275 108" stroke="#2aad52" stroke-width="1.5" fill="none" opacity="0.5"/>
+        <path d="M188 140 C222 140,255 142,275 142" stroke="#2aad52" stroke-width="2" fill="none" opacity="0.6"/>
+        <path d="M188 178 C222 178,255 172,275 172" stroke="#2aad52" stroke-width="1.5" fill="none" opacity="0.5"/>
+        <path d="M188 213 C222 213,255 195,275 195" stroke="#2aad52" stroke-width="1.2" fill="none" opacity="0.4"/>
+        <!-- Column 3: larger green dots -->
+        <circle cx="280" cy="100" r="7" fill="#2aad52" opacity="0.6"/><circle cx="302" cy="128" r="10" fill="#2aad52" opacity="0.8"/><circle cx="278" cy="155" r="8" fill="#2aad52" opacity="0.7"/><circle cx="305" cy="178" r="12" fill="#2aad52" opacity="0.85"/><circle cx="282" cy="200" r="7" fill="#2aad52" opacity="0.6"/>
+        <!-- Connecting flow lines col3→col4 -->
+        <path d="M316 110 C344 110,368 112,378 112" stroke="#2aad52" stroke-width="1.8" fill="none" opacity="0.6"/>
+        <path d="M318 148 C346 148,368 138,378 135" stroke="#2aad52" stroke-width="2.2" fill="none" opacity="0.7"/>
+        <path d="M318 178 C346 178,368 168,378 165" stroke="#2aad52" stroke-width="1.8" fill="none" opacity="0.6"/>
+        <!-- Column 4: largest dots -->
+        <circle cx="388" cy="108" r="9" fill="#2aad52" opacity="0.7"/><circle cx="405" cy="138" r="14" fill="#2aad52" opacity="0.9"/><circle cx="390" cy="168" r="10" fill="#2aad52" opacity="0.75"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="section" id="how">
+  <div class="wrap" style="align-items:flex-start;">
+    <div>
+      <div class="eyebrow">How It Works</div>
+      <h2>Multiple lenses.<br><span class="green">A connected system.</span></h2>
+      <p class="body-text">SriDah combines market data, statistical models, machine learning, LLMs and agents to turn data and context into market intelligence.</p>
+    </div>
+    <div>
+      <svg viewBox="0 0 430 360" class="viz" xmlns="http://www.w3.org/2000/svg" font-family="Inter,sans-serif">
+        <!-- Top row boxes -->
+        <rect x="8" y="8" width="160" height="58" rx="7" fill="none" stroke="currentColor" stroke-width="1" opacity="0.25"/>
+        <text x="88" y="30" text-anchor="middle" font-size="11" fill="currentColor" font-weight="500">Market Data</text>
+        <text x="88" y="47" text-anchor="middle" font-size="9" fill="currentColor" opacity="0.45">Price, volume, corporate actions</text>
+
+        <rect x="262" y="8" width="160" height="58" rx="7" fill="none" stroke="currentColor" stroke-width="1" opacity="0.25"/>
+        <text x="342" y="30" text-anchor="middle" font-size="11" fill="currentColor" font-weight="500">Market Context</text>
+        <text x="342" y="47" text-anchor="middle" font-size="9" fill="currentColor" opacity="0.45">Results, news, management commentary</text>
+
+        <!-- Top connector -->
+        <line x1="168" y1="37" x2="262" y2="37" stroke="currentColor" stroke-width="1" stroke-dasharray="4,3" opacity="0.2"/>
+
+        <!-- Arrows down to middle row -->
+        <line x1="88" y1="66" x2="88" y2="148" stroke="currentColor" stroke-width="1" opacity="0.2"/>
+        <polygon points="85,146 91,146 88,153" fill="currentColor" opacity="0.25"/>
+        <line x1="342" y1="66" x2="342" y2="148" stroke="currentColor" stroke-width="1" opacity="0.2"/>
+        <polygon points="339,146 345,146 342,153" fill="currentColor" opacity="0.25"/>
+
+        <!-- Middle row: 3 circles -->
+        <!-- Statistical Models -->
+        <circle cx="88" cy="200" r="54" fill="none" stroke="currentColor" stroke-width="1" opacity="0.2"/>
+        <rect x="73" y="177" width="4" height="15" rx="1" fill="#2aad52"/>
+        <rect x="80" y="171" width="4" height="21" rx="1" fill="#2aad52"/>
+        <rect x="87" y="175" width="4" height="17" rx="1" fill="#2aad52"/>
+        <rect x="94" y="168" width="4" height="24" rx="1" fill="#2aad52"/>
+        <rect x="101" y="173" width="4" height="19" rx="1" fill="#2aad52"/>
+        <text x="88" y="212" text-anchor="middle" font-size="10.5" fill="currentColor" font-weight="500">Statistical Models</text>
+        <text x="88" y="226" text-anchor="middle" font-size="8.5" fill="currentColor" opacity="0.45">Hypothesis testing,</text>
+        <text x="88" y="237" text-anchor="middle" font-size="8.5" fill="currentColor" opacity="0.45">cohort analysis,</text>
+        <text x="88" y="248" text-anchor="middle" font-size="8.5" fill="currentColor" opacity="0.45">probabilistic evidence</text>
+
+        <!-- Machine Learning -->
+        <circle cx="215" cy="200" r="54" fill="none" stroke="currentColor" stroke-width="1" opacity="0.2"/>
+        <circle cx="200" cy="182" r="3.5" fill="#2aad52"/><circle cx="215" cy="177" r="3.5" fill="#2aad52"/><circle cx="230" cy="182" r="3.5" fill="#2aad52"/>
+        <circle cx="205" cy="195" r="3.5" fill="#2aad52"/><circle cx="224" cy="195" r="3.5" fill="#2aad52"/>
+        <circle cx="214" cy="207" r="4" fill="#2aad52"/>
+        <line x1="200" y1="182" x2="215" y2="177" stroke="#2aad52" stroke-width="0.8"/><line x1="215" y1="177" x2="230" y2="182" stroke="#2aad52" stroke-width="0.8"/>
+        <line x1="200" y1="182" x2="205" y2="195" stroke="#2aad52" stroke-width="0.8"/><line x1="230" y1="182" x2="224" y2="195" stroke="#2aad52" stroke-width="0.8"/>
+        <line x1="205" y1="195" x2="214" y2="207" stroke="#2aad52" stroke-width="0.8"/><line x1="224" y1="195" x2="214" y2="207" stroke="#2aad52" stroke-width="0.8"/>
+        <text x="215" y="220" text-anchor="middle" font-size="10.5" fill="currentColor" font-weight="500">Machine Learning</text>
+        <text x="215" y="233" text-anchor="middle" font-size="8.5" fill="currentColor" opacity="0.45">Nonlinear patterns,</text>
+        <text x="215" y="244" text-anchor="middle" font-size="8.5" fill="currentColor" opacity="0.45">feature interactions,</text>
+        <text x="215" y="255" text-anchor="middle" font-size="8.5" fill="currentColor" opacity="0.45">ranking</text>
+
+        <!-- LLMs -->
+        <circle cx="342" cy="200" r="54" fill="none" stroke="currentColor" stroke-width="1" opacity="0.2"/>
+        <rect x="326" y="176" width="24" height="30" rx="3" fill="none" stroke="#2aad52" stroke-width="1.5"/>
+        <line x1="331" y1="186" x2="345" y2="186" stroke="#2aad52" stroke-width="1.5"/>
+        <line x1="331" y1="193" x2="345" y2="193" stroke="#2aad52" stroke-width="1.5"/>
+        <line x1="331" y1="200" x2="341" y2="200" stroke="#2aad52" stroke-width="1.5"/>
+        <text x="342" y="216" text-anchor="middle" font-size="10.5" fill="currentColor" font-weight="500">LLMs</text>
+        <text x="342" y="230" text-anchor="middle" font-size="8.5" fill="currentColor" opacity="0.45">Extract and connect</text>
+        <text x="342" y="241" text-anchor="middle" font-size="8.5" fill="currentColor" opacity="0.45">unstructured</text>
+        <text x="342" y="252" text-anchor="middle" font-size="8.5" fill="currentColor" opacity="0.45">market context</text>
+
+        <!-- Middle connectors (dashed) -->
+        <line x1="142" y1="200" x2="161" y2="200" stroke="currentColor" stroke-width="1" stroke-dasharray="3,2" opacity="0.25"/>
+        <line x1="269" y1="200" x2="288" y2="200" stroke="currentColor" stroke-width="1" stroke-dasharray="3,2" opacity="0.25"/>
+
+        <!-- Lines down to Agents -->
+        <line x1="88" y1="254" x2="148" y2="296" stroke="currentColor" stroke-width="1" opacity="0.18"/>
+        <line x1="215" y1="254" x2="215" y2="296" stroke="currentColor" stroke-width="1" opacity="0.18"/>
+        <line x1="342" y1="254" x2="282" y2="296" stroke="currentColor" stroke-width="1" opacity="0.18"/>
+
+        <!-- Agents circle -->
+        <circle cx="215" cy="325" r="38" fill="none" stroke="#2aad52" stroke-width="1.5" opacity="0.5"/>
+        <circle cx="208" cy="313" r="4" fill="#2aad52"/><circle cx="221" cy="311" r="4" fill="#2aad52"/><circle cx="215" cy="323" r="5" fill="#2aad52"/>
+        <line x1="208" y1="317" x2="215" y2="318" stroke="#2aad52" stroke-width="1.2"/><line x1="221" y1="315" x2="215" y2="318" stroke="#2aad52" stroke-width="1.2"/>
+        <text x="215" y="340" text-anchor="middle" font-size="11" fill="currentColor" font-weight="500">Agents</text>
+        <text x="215" y="352" text-anchor="middle" font-size="8.5" fill="currentColor" opacity="0.45">Orchestrate detection, research and monitoring as a continuous system</text>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- WHY NOW -->
+<section class="section section-alt" id="why">
+  <div class="wrap">
+    <div>
+      <div class="eyebrow">Why Now</div>
+      <h2>From isolated analysis<br><span class="green">to continuous intelligence.</span></h2>
+      <p class="body-text">Advances in data infrastructure, computing, statistical modelling, machine learning and LLMs make it possible to continuously analyse market behaviour at scale.</p>
+    </div>
+    <div>
+      <svg viewBox="0 0 440 280" class="viz" xmlns="http://www.w3.org/2000/svg" font-family="Inter,sans-serif">
+        <!-- THEN label -->
+        <text x="8" y="16" font-size="9" fill="currentColor" opacity="0.5" font-weight="500" letter-spacing="0.1em">THEN</text>
+        <text x="8" y="30" font-size="9.5" fill="currentColor" opacity="0.4">Separate activities</text>
+        <!-- 4 circles linear -->
+        <circle cx="28" cy="120" r="13" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.35"/>
+        <circle cx="83" cy="120" r="13" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.35"/>
+        <circle cx="138" cy="120" r="13" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.35"/>
+        <circle cx="193" cy="120" r="13" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.35"/>
+        <line x1="41" y1="120" x2="70" y2="120" stroke="currentColor" stroke-width="1" opacity="0.25"/>
+        <line x1="96" y1="120" x2="125" y2="120" stroke="currentColor" stroke-width="1" opacity="0.25"/>
+        <line x1="151" y1="120" x2="180" y2="120" stroke="currentColor" stroke-width="1" opacity="0.25"/>
+        <!-- Labels -->
+        <text x="28" y="143" text-anchor="middle" font-size="8.5" fill="currentColor" font-weight="500">Observe</text>
+        <text x="28" y="154" text-anchor="middle" font-size="7.5" fill="currentColor" opacity="0.4">Collect data</text>
+        <text x="83" y="143" text-anchor="middle" font-size="8.5" fill="currentColor" font-weight="500">Research</text>
+        <text x="83" y="154" text-anchor="middle" font-size="7.5" fill="currentColor" opacity="0.4">Analyse and test</text>
+        <text x="138" y="143" text-anchor="middle" font-size="8.5" fill="currentColor" font-weight="500">Decide</text>
+        <text x="138" y="154" text-anchor="middle" font-size="7.5" fill="currentColor" opacity="0.4">Interpret and act</text>
+        <text x="193" y="143" text-anchor="middle" font-size="8.5" fill="currentColor" font-weight="500">Monitor</text>
+        <text x="193" y="154" text-anchor="middle" font-size="7.5" fill="currentColor" opacity="0.4">Track manually</text>
+
+        <!-- Vertical divider -->
+        <line x1="225" y1="8" x2="225" y2="275" stroke="currentColor" stroke-width="0.5" opacity="0.15"/>
+
+        <!-- NOW label -->
+        <text x="235" y="16" font-size="9" fill="currentColor" opacity="0.5" font-weight="500" letter-spacing="0.1em">NOW</text>
+        <text x="235" y="30" font-size="9.5" fill="currentColor" opacity="0.4">A continuous intelligence system</text>
+
+        <!-- Center loop circle -->
+        <circle cx="332" cy="148" r="44" fill="none" stroke="#2aad52" stroke-width="1.5" opacity="0.4"/>
+        <text x="332" y="145" text-anchor="middle" font-size="9.5" fill="currentColor" font-style="italic">A continuous</text>
+        <text x="332" y="159" text-anchor="middle" font-size="9.5" fill="currentColor" font-style="italic">loop</text>
+
+        <!-- 5 nodes on circle perimeter -->
+        <!-- Observe (top) -->
+        <circle cx="332" cy="92" r="5.5" fill="#2aad52"/>
+        <text x="332" y="76" text-anchor="middle" font-size="8.5" fill="currentColor" font-weight="500">Observe</text>
+        <text x="332" y="87" text-anchor="middle" font-size="7.5" fill="currentColor" opacity="0.4">Market data and context</text>
+
+        <!-- Detect (top-right) -->
+        <circle cx="381" cy="122" r="5.5" fill="#2aad52"/>
+        <text x="406" y="116" text-anchor="middle" font-size="8.5" fill="currentColor" font-weight="500">Detect</text>
+        <text x="408" y="127" text-anchor="middle" font-size="7.5" fill="currentColor" opacity="0.4">Unusual behaviour</text>
+        <text x="408" y="137" text-anchor="middle" font-size="7.5" fill="currentColor" opacity="0.4">in real time</text>
+
+        <!-- Test (bottom-right) -->
+        <circle cx="372" cy="178" r="5.5" fill="#2aad52"/>
+        <text x="401" y="183" text-anchor="middle" font-size="8.5" fill="currentColor" font-weight="500">Test</text>
+        <text x="408" y="193" text-anchor="middle" font-size="7.5" fill="currentColor" opacity="0.4">Using historical evidence</text>
+
+        <!-- Monitor (bottom-left) -->
+        <circle cx="290" cy="178" r="5.5" fill="#2aad52"/>
+        <text x="263" y="194" text-anchor="middle" font-size="8.5" fill="currentColor" font-weight="500">Monitor</text>
+        <text x="263" y="205" text-anchor="middle" font-size="7.5" fill="currentColor" opacity="0.4">Track as conditions evolve</text>
+
+        <!-- Learn (left) -->
+        <circle cx="283" cy="122" r="5.5" fill="#2aad52"/>
+        <text x="262" y="114" text-anchor="middle" font-size="8.5" fill="currentColor" font-weight="500">Learn</text>
+        <text x="258" y="124" text-anchor="middle" font-size="7.5" fill="currentColor" opacity="0.4">Improve over time</text>
+
+        <!-- Arc arrows between nodes -->
+        <path d="M337 87 A63 63 0 0 1 381 116" stroke="#2aad52" stroke-width="1" fill="none" stroke-dasharray="3,2" opacity="0.5"/>
+        <path d="M381 128 A63 63 0 0 1 372 172" stroke="#2aad52" stroke-width="1" fill="none" stroke-dasharray="3,2" opacity="0.5"/>
+        <path d="M366 182 A63 63 0 0 1 296 182" stroke="#2aad52" stroke-width="1" fill="none" stroke-dasharray="3,2" opacity="0.5"/>
+        <path d="M290 172 A63 63 0 0 1 283 128" stroke="#2aad52" stroke-width="1" fill="none" stroke-dasharray="3,2" opacity="0.5"/>
+        <path d="M283 116 A63 63 0 0 1 327 87" stroke="#2aad52" stroke-width="1" fill="none" stroke-dasharray="3,2" opacity="0.5"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT NEXT -->
+<section class="section" id="next">
+  <div class="wrap" style="align-items:flex-start;">
+    <div>
+      <div class="eyebrow">What Next</div>
+      <h2>We're starting with the research.<br><span class="green">Building towards continuous market intelligence.</span></h2>
+    </div>
+    <div class="phases-row">
+      <div class="phase">
+        <div class="phase-num-pill">01</div>
+        <div class="phase-title">Quant Research</div>
+        <div class="phase-desc">Discover and validate repeatable market behaviours.</div>
+      </div>
+      <div class="phase">
+        <div class="phase-num">02</div>
+        <div class="phase-title">Market Intelligence</div>
+        <div class="phase-desc">Continuously find those behaviours in live markets and attach evidence.</div>
+      </div>
+      <div class="phase">
+        <div class="phase-num">03</div>
+        <div class="phase-title">Decision Support</div>
+        <div class="phase-desc">Combine quantitative evidence with market context to support better decisions.</div>
+      </div>
+      <div class="phase">
+        <div class="phase-num">04</div>
+        <div class="phase-title">Agentic Execution</div>
+        <div class="phase-desc">Over time, support execution within defined strategies, risk limits and operating rules.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer id="footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-left">
+        <a class="logo" href="#" style="font-size:17px;">
+          <div class="logo-bar" style="height:18px;"></div>SriDah
+        </a>
+        <span class="footer-tagline">Research. Intelligence. Opportunity.</span>
+      </div>
+      <a href="mailto:hello@sridah.in" class="footer-email">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.55"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2,4 12,14 22,4"/></svg>
+        hello@sridah.in
+      </a>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2024 SriDah. All rights reserved.</span>
+      <span>Indian Equities. A Deeper Perspective</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+function drawHero() {
+  const canvas = document.getElementById('heroCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+
+  const dark = document.documentElement.dataset.theme === 'dark' ||
+    (!document.documentElement.dataset.theme && window.matchMedia('(prefers-color-scheme: dark)').matches);
+
+  ctx.clearRect(0, 0, W, H);
+
+  // Scattered background dots
+  function sr(n) { let x = Math.sin(n * 127.1 + 311.7) * 43758.5; return x - Math.floor(x); }
+  for (let i = 0; i < 220; i++) {
+    const x = sr(i) * W, y = sr(i + 100) * H, r = sr(i + 200) * 1.8 + 0.4;
+    ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2);
+    ctx.fillStyle = dark ? 'rgba(160,160,160,0.35)' : 'rgba(30,30,30,0.25)';
+    ctx.fill();
+  }
+
+  // Mountain shape
+  const peakX = W * 0.50, peakY = H * 0.10;
+  const baseY = H * 0.84;
+
+  ctx.beginPath();
+  ctx.moveTo(W * 0.02, baseY);
+  ctx.bezierCurveTo(W * 0.15, baseY, W * 0.35, baseY - 70, W * 0.47, peakY + 15);
+  ctx.bezierCurveTo(W * 0.52, peakY, W * 0.56, peakY + 18, W * 0.60, peakY + 55);
+  ctx.bezierCurveTo(W * 0.70, baseY - 50, W * 0.82, baseY - 12, W * 0.90, baseY);
+  ctx.lineTo(W * 0.02, baseY);
+  ctx.closePath();
+
+  const g = ctx.createLinearGradient(peakX, peakY, peakX, baseY);
+  if (dark) {
+    g.addColorStop(0, 'rgba(20,80,40,0.95)');
+    g.addColorStop(0.5, 'rgba(22,90,45,0.80)');
+    g.addColorStop(1, 'rgba(15,55,30,0.50)');
+  } else {
+    g.addColorStop(0, 'rgba(18,75,38,0.90)');
+    g.addColorStop(0.5, 'rgba(22,88,44,0.78)');
+    g.addColorStop(1, 'rgba(14,55,28,0.50)');
+  }
+  ctx.fillStyle = g;
+  ctx.fill();
+
+  // Surface contour lines
+  for (let i = 1; i < 9; i++) {
+    const t = i / 9;
+    const y = peakY + (baseY - peakY) * t;
+    const hw = 0.45 * W * Math.sqrt(t);
+    ctx.beginPath();
+    ctx.moveTo(peakX - hw, y);
+    ctx.bezierCurveTo(peakX - hw * 0.5, y - 4, peakX + hw * 0.5, y - 4, peakX + hw * 0.55, y);
+    ctx.strokeStyle = dark ? 'rgba(80,200,120,0.10)' : 'rgba(0,60,20,0.08)';
+    ctx.lineWidth = 0.7; ctx.stroke();
+  }
+
+  // Dots on the mountain surface
+  const mdots = [[0.36,0.32],[0.44,0.22],[0.50,0.16],[0.55,0.25],[0.42,0.42],[0.50,0.38],[0.60,0.36],[0.33,0.54],[0.47,0.50],[0.58,0.48],[0.66,0.52],[0.38,0.60],[0.52,0.58],[0.64,0.60]];
+  mdots.forEach(([fx,fy]) => {
+    ctx.beginPath(); ctx.arc(fx*W, fy*H, 2, 0, Math.PI*2);
+    ctx.fillStyle = dark ? 'rgba(160,255,190,0.75)' : 'rgba(0,40,15,0.65)';
+    ctx.fill();
+  });
+
+  // Annotation lines + labels
+  const anns = [
+    { fx: 0.17, fy: 0.70, top: 0.45, lines: ['Signals', 'in data'] },
+    { fx: 0.34, fy: 0.55, top: 0.30, lines: ['Patterns', 'in behaviour'] },
+    { fx: 0.47, fy: 0.30, top: 0.12, lines: ['Evidence', 'in history'] },
+    { fx: 0.57, fy: 0.18, top: 0.02, lines: ['Opportunities', 'in the present'] },
+  ];
+
+  ctx.font = '9px Inter, system-ui, sans-serif';
+  const textColor = dark ? 'rgba(190,190,190,0.85)' : 'rgba(60,60,60,0.8)';
+  const lineColor = dark ? 'rgba(130,130,130,0.4)' : 'rgba(80,80,80,0.35)';
+
+  anns.forEach(ann => {
+    const x = ann.fx * W, yBase = ann.fy * H, yTop = ann.top * H;
+    // dot
+    ctx.beginPath(); ctx.arc(x, yBase, 3, 0, Math.PI * 2);
+    ctx.fillStyle = '#2aad52'; ctx.fill();
+    // line
+    ctx.beginPath(); ctx.moveTo(x, yBase); ctx.lineTo(x, yTop);
+    ctx.strokeStyle = lineColor; ctx.lineWidth = 0.8; ctx.stroke();
+    // text
+    ctx.fillStyle = textColor; ctx.textAlign = 'left';
+    ann.lines.forEach((ln, i) => ctx.fillText(ln, x + 4, yTop + i * 11));
+  });
+
+  // Right-side data labels
+  const labels = ['PRICE','VOLUME','PARTICIPATION','MOMENTUM','RELATIVE STRENGTH','AND MORE...'];
+  ctx.font = '8px Inter, system-ui, sans-serif';
+  ctx.fillStyle = dark ? 'rgba(140,140,140,0.55)' : 'rgba(100,100,100,0.5)';
+  ctx.textAlign = 'right';
+  labels.forEach((l, i) => ctx.fillText(l, W - 2, H * 0.40 + i * 14));
+}
+
+window.addEventListener('load', drawHero);
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', drawHero);
+</script>
